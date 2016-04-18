@@ -80,7 +80,7 @@ spark-worker:
     - ./data:/tmp/data
 ```
 
-Here's a sample Spark program. It will read in a file consisting of two values -- a user id and a page id. The program will then calculate the frequcny of each page id. 
+Here's a sample Spark program. It will read in a file consisting of two values -- a user id and a page id. The program will then calculate the frequency of each page id. 
 
 ```
 from pyspark import SparkContext
@@ -89,7 +89,7 @@ sc = SparkContext("spark://spark-master:7077", "PopularItems")
 
 data = sc.textFile("/tmp/data/access.log", 2)     # each worker loads a piece of the data file
 
-pairs = data.map(lambda line: line.split("\t"))   # tell each worker to split each line of it's partition
+pairs = data.map(lambda line: line.split("\t"))   # tell each worker to split each line of its partition
 pages = pairs.map(lambda pair: (pair[1], 1))      # re-layout the data to ignore the user id
 count = pages.reduceByKey(lambda x,y: x+y)        # shuffle the data so that each key is only on one worker
                                                   # and then reduce all the values by adding them together
